@@ -8,22 +8,16 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      reserve_id: {
-        allowNull: false,
-        //autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.INTEGER,
-      },
       lodging_id : {
         type: Sequelize.INTEGER,
         references: {
           model: 'lodgings',
-          key: 'lodging_id' 
+          key: 'id' 
         },
         allowNull: false
       },
       user_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       start_date: {
         type: Sequelize.DATE
@@ -32,10 +26,10 @@ module.exports = {
         type: Sequelize.DATE
       },
       adult_num: {
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER
       },
       kid_num: {
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER
       },
       infant_num: {
         type: Sequelize.INTEGER
@@ -43,11 +37,11 @@ module.exports = {
       star: {
         type: Sequelize.INTEGER
       },
-      created_at: {
+      updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
       },
-      updated_at: {
+      updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
       }

@@ -1,7 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const lodging = sequelize.define('lodging', {
-    lodgong_id: DataTypes.INTEGER,
     title: DataTypes.STRING,
     pic_id: DataTypes.INTEGER,
     adult_num: DataTypes.INTEGER,
