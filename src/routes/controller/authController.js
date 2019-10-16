@@ -1,5 +1,8 @@
 const {AuthService} = require('../../service/authService.js');
 let auth =  new AuthService();   
+const jwt = require('jsonwebtoken'); //env
+const privateKey="abcdefghijklmnopqrstuvwxyz012345" // env
+const path = require('path');
 
 class AuthController {
     constructor(){
@@ -97,31 +100,24 @@ class AuthController {
 
 
     /**
-     * passport 로그인 상태 세션 체크 함수 
+     * passport 로그인 상태 jwt 토큰 확인 함수 
      *
      * @param {*} req
      * @param {*} res
      * @returns
      * @memberof AuthController
      */
-    loginSessionCheck(req,res){
-        let result = {
-            status : 500,
-            message : '요청 성공',
-            data : { 
-                    is_logined : false,
-                    name : "",
-                }
-        };
-        if( req.session !== undefined && req.session.passport !== undefined ){
-          if(req.session.passport.user!==undefined){
-            result.status = 200;
-            result.data.is_logined = true;
-            result.data.name = req.session.passport.user.user_name;
-          }
+    loginjwtCheck(req,res,next){
+        try {
+            if(req.cookies.jwt === undefined){
+                res.redirect('/');
+            }
+            req.decoded  = jwt.verify(req.cookies.jwt, privateKey);
+            next();
+        } catch (error) {
+            console.log("유효하지 않은 토큰입니다" ,path.join(__dirname ,'/') );
+            res.redirect('/');
         }
-    
-        return result;
     }
 
     /**
