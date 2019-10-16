@@ -4,6 +4,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const session = require('express-session');
+
 const app = express();
 require('dotenv').config();
 
@@ -28,15 +29,17 @@ app.use(cookieParser());
 //console.log( "pathload : " + path.join(__dirname, '../web/public') );
 app.use(express.static(path.join(__dirname, '../web/public')));
 app.use('/uploads', express.static(path.join(__dirname, '../src/uploads')));
-//const passport = require('./modules/passport.js')(app);
+const passport = require('./modules/passport.js')(app);
 //router
 const indexRouter = require('./routes/index');
+const authRouter = require('./routes/auth');
+const authApi = require('./routes/api/auth-api')(passport);
 //api
-//app.use('/ad', adminUserApi);
+app.use('/api/auth', authApi);
 
 //page route
-
 app.use('/', indexRouter);
+app.use('/auth', authRouter);
 
 
 // catch 404 and forward to error handler
