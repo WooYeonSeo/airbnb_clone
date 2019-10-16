@@ -31,7 +31,7 @@ module.exports =  (app) => {
                             "user_name" : userinfo.user_name,
                             "is_admin" : userinfo.admin
                         }
-    
+                        
                         done(null, userdata, {
                             message: 'Welcome.'
                         });

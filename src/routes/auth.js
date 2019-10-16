@@ -8,7 +8,7 @@ let authController = new AuthController();
 // url : /auth/
 router.get('/',  (req, res)=>{
   //console.log("ㅡmain page ", req.session );
-  console.log("is logined");
+  console.log("is logined",req.session);
   //let result = authController.loginSessionCheck(req,res);
   //res.render(path.join(__dirname ,'../../web/views/index.ejs'));
   res.send("why??");
