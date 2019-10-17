@@ -18,6 +18,9 @@ dockr rm [container_id]
 // 도커 이미지 삭제 
 docker rmi [imgae_id]
 docker rmi -f [imgae_id] // 컨테이너까지 강제삭제 
+
+// 도커 컨테이너 로그보기
+docker logs 46817472b388
 ```
 
 - dcs를 쓸 수도 있다.
@@ -32,7 +35,8 @@ docker rmi -f [imgae_id] // 컨테이너까지 강제삭제
 ```javascript
 // dockerfile build
 docker build --tag testfile:0.1 .
-
+docker build --tag nginx:test .
+docker build --tag node-airbnb:test .
 
 // localport:dockerport 
 docker run -p 4000:4000 -it testfile:0.3 /bin/bash
@@ -46,33 +50,56 @@ docker run -p 4000:4000 -it testfile:0.3 /bin/bash
 docker run -p 4000:4000 -d nodefile:0.1
 ```
 
-### dockerhub 
-```bash
-// 어떤 이미지를 받을지
-FROM node:10.16.0-alpine 
-// 작성자
-MAINTAINER WooYeonSeo <vantovan7414@gmail.com>
 
-// pc -> docker container로 복사, 상위 디렉토리 접근 불가능
-COPY ./ /apps/airbnb/
 
-// 기본 워킹 디렉토리 설정, RUN 할 때 마다 초기화 되므로 기본 디렉토리를 잡으려면 설정해 주어야 한다
-WORKDIR /apps/airbnb
 
-// console 명령어 실행 개행 \ &로 실행 가능
-RUN npm install 
 
-// 기본 포트 오픈
-EXPOSE 4000 
+- git 설치
+
+sudo apt-get install libcurl4-gnutls-dev libexpat1-dev gettext libz-dev libssl-dev
+
+```
+// apt-get update snd install git
+apt-get update && apt-get install -y git
 ```
 
-### 미해결 삽질
-- docker image file을 ncp에 올리고 싶었는데, taging된 이미지인데도 업로드가 안된다.
-- docker image build할 때 도커파일을 .dockerfile로 만듬.. (그냥 Dockerfile!!!!)
-- git private repo는 ssh 인증 키 방식을 써야함.
+**DATE_FORMAT(now(), '%Y-%m-%d %H:%i:%s')**
 
 
-### 더 해볼것 / 궁금한 것 
-- 도커로 자동배포하는 법
-- 도커 nginx container 만들기
-- 도커파일에서 이미지를 하나만 받을 수 있는건지 궁금 from 뒤에 쭉 쓰면 되나여..
+
+
+
+
+
+[https://velog.io/@jeff0720/2018-11-18-2111-%EC%9E%91%EC%84%B1%EB%90%A8-iojomvsf0n](https://velog.io/@jeff0720/2018-11-18-2111-작성됨-iojomvsf0n)
+
+
+
+## docker bash 접속
+
+-  docker exec -it airbnbDB bash
+
+  > mysql -u root -p
+
+
+## docker compose 
+
+**Docker compose**는 docker container 여럿을 띄워 관리하는 도구로서 하나의 파일 docker-compose.yml로서 여러 container의 설정을 관리할 수 있다.
+
+
+```bash
+#curl로 설치 
+sudo curl -L "https://github.com/docker/compose/releases/download/1.23.1/docker-compose-$(uname -s)-$(uname -m)"\
+          -o /usr/local/bin/docker-compose
+
+
+# 실행권한 변경
+sudo chmod +x /usr/local/bin/docker-compose
+
+# 버전확인 
+docker-compose --version
+
+# compose up 
+docker-compose up
+```
+
