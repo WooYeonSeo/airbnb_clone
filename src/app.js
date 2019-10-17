@@ -34,8 +34,10 @@ const passport = require('./modules/passport.js')(app);
 const indexRouter = require('./routes/index');
 const authRouter = require('./routes/auth');
 const authApi = require('./routes/api/auth-api')(passport);
+const roomApi = require('./routes/api/room-api');
 //api
 app.use('/api/auth', authApi);
+app.use('/api/room', roomApi);
 
 //page route
 app.use('/', indexRouter);

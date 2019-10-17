@@ -12,7 +12,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       pic_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       adult_num: {
         type: Sequelize.INTEGER
@@ -24,13 +24,13 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       lodging_type: {
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       star_avg: {
         type: Sequelize.INTEGER
       },
       price: {
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,

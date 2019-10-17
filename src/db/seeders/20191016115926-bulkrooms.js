@@ -34,7 +34,7 @@ module.exports = {
         })
       })
 
-      console.log("results ", results)
+      console.log("results ", results);
       return queryInterface.bulkInsert('lodgings', results, {});
   },
 

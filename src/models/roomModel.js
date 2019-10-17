@@ -3,14 +3,14 @@ const db = require('../db/models/index.js');
 /**
  *
  *
- * @class ReservationModel
+ * @class RoomModel
  */
-module.exports = class ReservationModel{
+module.exports = class RoomModel{
     /**
      *Creates an instance of carouselModel.
      * @constructor
      * @author: 
-     * @this {ReservationModel}
+     * @this {RoomModel}
      * @param {}
      */
     constructor(){
@@ -26,5 +26,19 @@ module.exports = class ReservationModel{
      */
     async getLodgings(startIdx = 0, limitCnt = 10){
         return await this.db.lodging.findAll({ offset: startIdx, limit: limitCnt });
+    }
+
+    async getAvailableRooms(roomCondition, reserveCondition){
+
+        return await this.db.lodging.findAll({
+            where : roomCondition,
+            include: {
+                model: this.db.reservation,
+                where: this.db.Sequelize.and(
+                    reserveCondition
+                ),
+                required: false 
+            }
+        });
     }
 }

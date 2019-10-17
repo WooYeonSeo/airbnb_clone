@@ -32,6 +32,11 @@ Object.keys(db).forEach(modelName => {
   }
 });
 
+db.lodging.hasMany(db.reservation, {
+  foreignKey: 'lodging_id',
+  sourceKey: 'id',
+});  
+
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 

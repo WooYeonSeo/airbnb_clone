@@ -37,7 +37,7 @@ module.exports = {
       star: {
         type: Sequelize.INTEGER
       },
-      updatedAt: {
+      createdAt: {
         allowNull: false,
         type: Sequelize.DATE
       },
