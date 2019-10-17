@@ -1,0 +1,47 @@
+version: '3'
+services:
+  app:
+      container_name: airbnb
+      image: "node-airbnb:test"
+      ports:
+        - "5000:5000"
+      links:
+        - db
+      #environment: # 환경변수 설정
+        # - NODE_PATH=src
+        # DB_HOST : db
+        # MYSQL_DATABASE: airbnb
+      networks:
+        - backend
+      
+  nginx:
+      container_name: nginx
+      image: "nginx:test"
+      ports:
+       - "8080:8080"
+      networks:
+       - backend
+      depends_on:
+        - app
+  db:
+    container_name: airbnbDB
+    image: mysql:8.0.17
+    command: --default-authentication-plugin=mysql_native_password
+    # volumes:
+    #  - "airbnb:/var/lib/mysql"
+    restart: always
+    ports:
+      - 3300:3306
+    environment:
+      MYSQL_DATABASE: "airbnb"
+      #MYSQL_USER: "root"
+      #MYSQL_PASSWORD: "rootUser1Go!"
+      MYSQL_ROOT_PASSWORD: "rootUser1Go!"
+    networks:
+      - backend
+ 
+networks: # 가장 기본적인 bridge 네트워크
+  backend:
+    driver: bridge
+
+#volumes: airbnb:

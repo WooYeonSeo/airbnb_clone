@@ -1,10 +1,7 @@
-FROM node:10.16.0-alpine
-MAINTAINER WooYeonSeo <vantovan7414@gmail.com>
+FROM nginx:alpine
 
-COPY ./ /apps/airbnb/
-WORKDIR /apps/airbnb
-RUN  npm install
-RUN npm install -g nodemon 
-
-EXPOSE 4000
-CMD ["npm", "start"]
+RUN rm /etc/nginx/conf.d/default.conf
+ 
+COPY default.conf /etc/nginx/conf.d/default.conf
+ 
+CMD ["nginx", "-g", "daemon off;"]
