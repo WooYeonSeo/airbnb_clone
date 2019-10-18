@@ -2,21 +2,23 @@ version: '3'
 services:
   app:
       container_name: airbnb
-      image: "node-airbnb:test"
+      #image: "node-airbnb:test"
+      build:
+        context: .
+        dockerfile: ./node.Dockerfile
       ports:
         - "5000:5000"
       links:
         - db
-      #environment: # 환경변수 설정
-        # - NODE_PATH=src
-        # DB_HOST : db
-        # MYSQL_DATABASE: airbnb
       networks:
         - backend
       
   nginx:
       container_name: nginx
-      image: "nginx:test"
+      #image: "nginx:test"
+      build:
+        context: .
+        dockerfile: ./nginx.Dockerfile
       ports:
        - "8080:8080"
       networks:
@@ -30,13 +32,24 @@ services:
     # volumes:
     #  - "airbnb:/var/lib/mysql"
     restart: always
-    ports:
-      - 3300:3306
+    # ports:
+    #  - 3300:3306
     environment:
       MYSQL_DATABASE: "airbnb"
       #MYSQL_USER: "root"
       #MYSQL_PASSWORD: "rootUser1Go!"
       MYSQL_ROOT_PASSWORD: "rootUser1Go!"
+    networks:
+      - backend
+
+  redis:
+    container_name: airbnbRedis
+    image: redis:5.0.6-alpine
+    ports:
+      - "6379:6379"
+    #volumes:
+    #  - airbnb:/data/redis
+    restart: always
     networks:
       - backend
  
