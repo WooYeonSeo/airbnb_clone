@@ -103,3 +103,7 @@ docker-compose --version
 docker-compose up
 ```
 
+- docker-compose version 3 network bridge 
+   - 같은 브릿지 네트워크를 사용해서 내부 ip는 컨테이너에서 정의된 이름으로 접근 가능.
+   - node service에서 db를 접근한다고 하면 [bridge에등록된_db]:3306 로 접근가능.
+   - 같은 이유로 ECONNREFUSED docker compose mysql 127.0.0.1로 뜨는게 로컬호스트가 아니라 db constainer ip를 연결해 주어야 하는 것.
