@@ -1,11 +1,9 @@
 import React, { useState, useEffect , useReducer} from "react";
-import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'react-dates';
-import 'react-dates/lib/css/_datepicker.css';
+
+
 import styled from 'styled-components';
-import 'react-dates/initialize';
-import moment from 'moment';
-import '../css/react_dates_overrides.css';
 import Modal from './numberModalComponent';
+import DatePicker from './datePickerComponent';
 
 import {numberCountReducer, numberCountState} from '../reducer/counterReducer.js'
 const FilterBox = styled.div`
@@ -42,16 +40,9 @@ const FilterButton = styled.div`
 `;
 
 const Filter = () => {
-  //user state closer
-  //const [counter, setCounter] = useState(0);
-  // life cycle 에 있는걸 마지막에 넣어줌 순서도 잘 지켜서 넣어라
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
-  const [focusedInput,setFocusedInput] = useState(null);
+  
 
   const [state, dispatch] = useReducer(numberCountReducer, numberCountState);
-
-
 
   return (
     <>
@@ -61,29 +52,13 @@ const Filter = () => {
 
         <FilterButton >
             인원  게스트 : {state.adultCnt} 
-        </FilterButton> 
+            <Modal numberDis={dispatch} numberCnt={state}/>
+        </FilterButton>
         
-        <Modal numberDis={dispatch} numberCnt={state}/>
-       
-        <DateRangePicker
-            startDate={startDate} // momentPropTypes.momentObj or null,
-            startDateId="your_unique_start_date_id" // PropTypes.string.isRequired,
-            endDate={endDate} // momentPropTypes.momentObj or null,
-            endDateId="your_unique_end_date_id" // PropTypes.string.isRequired,
-            onDatesChange={({ startDate, endDate }) => {
-                setStartDate(startDate);
-                setEndDate(endDate);
-            } } // PropTypes.func.isRequired,
-            focusedInput={focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
-            onFocusChange={focusedInput => setFocusedInput(focusedInput)} // PropTypes.func.isRequired,
-            onClose= {()=>{ console.log("onclick close"); setFocusedInput(null) }}
-        />
-        
+        <DatePicker/>
 
         <FilterBox>
-            <div name="count">
-                <span value ="adult">Nothing</span>
-            </div> 
+           가격
         </FilterBox>
         <Button>
             검색
