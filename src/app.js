@@ -4,8 +4,10 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const session = require('express-session');
+const  cors = require('cors');
 
 const app = express();
+app.use(cors());
 require('dotenv').config();
 
 app.use(session({
