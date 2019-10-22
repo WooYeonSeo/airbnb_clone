@@ -1,11 +1,12 @@
 import React, { useState, useEffect , useReducer} from "react";
-
-
 import styled from 'styled-components';
 import Modal from './numberModalComponent';
 import DatePicker from './datePickerComponent';
 
-import {numberCountReducer, numberCountState} from '../reducer/counterReducer.js'
+import context from '../context/context'
+import {numberCountReducer, numberCountState} from '../reducer/counterReducer.js';
+import RoomBox from './roomBoxComponent'
+
 const FilterBox = styled.div`
     border: 1px solid #cecece;
     display: inline-block;
@@ -40,20 +41,19 @@ const FilterButton = styled.div`
 `;
 
 const Filter = () => {
-  
 
   const [state, dispatch] = useReducer(numberCountReducer, numberCountState);
-
   return (
     <>
         <FilterBox>
             목적지 :  <input />
         </FilterBox>
-
-        <FilterButton >
-            인원  게스트 : {state.adultCnt} 
-            <Modal numberDis={dispatch} numberCnt={state}/>
-        </FilterButton>
+        <context.numberContext.Provider value={{ state, dispatch }}>
+            <FilterButton >
+                인원  게스트 : {state.adultCnt} 
+                <Modal />
+            </FilterButton>
+        </context.numberContext.Provider>
         
         <DatePicker/>
 
@@ -63,6 +63,9 @@ const Filter = () => {
         <Button>
             검색
         </Button>
+
+
+        <RoomBox />
 
        
     </>

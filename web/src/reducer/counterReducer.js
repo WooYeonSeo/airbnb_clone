@@ -1,3 +1,4 @@
+
 const numberCountState = {
     adultCnt: 0,
     kidCnt: 0,
@@ -28,6 +29,6 @@ const setCount = (state, stateKey, cnt)=>{
     obj[stateKey] = cnt;
     return obj;
 }
-  
+
 
 export {numberCountReducer, numberCountState};

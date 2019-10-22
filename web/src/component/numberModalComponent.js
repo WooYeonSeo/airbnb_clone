@@ -14,6 +14,7 @@ const ModalBox = styled.div`
     background-color: #fff;
     position: absolute;
     top:56px;
+    left :900px;
 }
 `;
 
@@ -27,14 +28,12 @@ const Modal = (props) => {
     ];
 
     const lists = categories.map((v, i) => (
-        <Counter key={i} category={v} numberDis={props.numberDis}  numberCnt={props.numberCnt} />
+        <Counter key={i} category={v}  />
     ));
     
-
     return (
         <>
             <ModalBox>
-                
                 {lists}
                 <div>
                     <button> 삭제 </button>
