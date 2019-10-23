@@ -26,20 +26,11 @@ const useFetch = (url, options) => {
 };
 
 const RoomBox = (props) => {
-   // const [state, dispatch] = useReducer(numberCountReducer, numberCountState);
-    //const [data, dataSet] = useState(false);
     let roomsInfo  = useFetch('http://localhost:5000/api/room/search/rooms',null) ||[ ];
 
-    useEffect( ()=>{
+    useEffect(()=>{
         console.log("data fetched");
-
     }, []);
-
-    /* const fetchMyAPI = async ()=>{
-        let response = await fetch('api/data')
-        response = await response.json()
-        dataSet(response)
-    } */
 
     const rooms = roomsInfo.map((v, i) => (
         <RoomInfo key={i} room={v} />
@@ -48,7 +39,7 @@ const RoomBox = (props) => {
     return (
         <>
             <MainContainer>
-                <span>ROOMS</span>
+                <span>ROOMS : N개</span>
                 <div>
                     {rooms}
                 </div>
