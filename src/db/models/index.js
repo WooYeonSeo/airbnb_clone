@@ -37,6 +37,9 @@ db.lodging.hasMany(db.reservation, {
   sourceKey: 'id',
 });  
 
+// rooms has many reservations.
+// reservation has many rooms 
+
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 

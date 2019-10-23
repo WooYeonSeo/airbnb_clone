@@ -38,13 +38,17 @@ class RoomController {
         const roomCondition = {};
         const reservationCondition ={};
         // 테스트할라면 값 받아서 넣는게 좋은데, 이러면 빈 객체 검새하는게 반복되는 것 같다.
+        // 이게 컨트롤러에 있는 게 맞는지. 폼만 정리해서 service쪽으로 가는게 맞을 것 같다
+
+        //validation
+        
         let priceFilter =  this.priceFilter(condition.min_price ,condition.max_price);     
         if(!util.ObjectisEmpty(priceFilter)){
             roomCondition.price =priceFilter;
         }
 
         let adultNumFilter = this.adultNumFilter(condition.adult_num);
-        if(!util.ObjectisEmpty(adultNumFilter)){
+        if(Number(condition.adult_num) > 0){
             roomCondition.adult_num =adultNumFilter;
         }
 
@@ -56,6 +60,7 @@ class RoomController {
 
         con.roomCondition = roomCondition;
         con.reservationCondition = reservationCondition;
+        console.log("roomCondition ", roomCondition)
         return con;
     }
 
@@ -79,11 +84,11 @@ class RoomController {
     }
 
     adultNumFilter(adultNum){
-        if(!adultNum){
+        /* if(Number(adultNum)==0){
             return {};
-        }
+        } */
         return {
-            [Op.gte]: adultNum,
+            [Op.gte]: Number(adultNum),
         };
     }
 
@@ -102,6 +107,19 @@ class RoomController {
 
         return [starDateOption,endDateOption];
     }
+
+
+    async reserveRoomRouter(req,res){
+        
+        
+
+        let condition = this.checkSearchFilter(req.query);
+        //console.log(condition);
+        let result = await room.searchRooms(condition);
+
+        res.json(result);
+    }
+
     
 
 }
