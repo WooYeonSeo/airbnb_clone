@@ -25,7 +25,7 @@ const Modal =  url => WrappedComponent => function Comp(props) {
       <miniModal.ModalBox isOpen={props.state.isOpen} ref={closeid} >
         <miniModal.CloseSpan onClick={props.toggleHandler}>x</miniModal.CloseSpan>
         <WrappedComponent {...props} data={data} />
-        <div> <miniModal.WhiteBtn>삭제</miniModal.WhiteBtn> <miniModal.ColorBtn>저장</miniModal.ColorBtn></div>
+        <div> <miniModal.WhiteBtn onClick={props.clearValueHandler}>삭제</miniModal.WhiteBtn> <miniModal.ColorBtn>저장</miniModal.ColorBtn></div>
       </miniModal.ModalBox>
     </>
   );

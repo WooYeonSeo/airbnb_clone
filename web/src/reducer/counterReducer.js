@@ -3,7 +3,7 @@ const numberCountState = {
     adultCnt: 0,
     kidCnt: 0,
     infantCnt : 0,
-    isOpen : true,
+    isOpen : false,
 
 };
 
@@ -17,6 +17,8 @@ const numberCountReducer = (state, action)=>{
             return setCount(state,"infantCnt", state.infantCnt + action.payload);
         case 'toggleModal':
             return toggleModal(state ,action.payload);
+        case 'clearValues':
+            return clearValues(state);
         default:
             throw new Error();
     }
@@ -33,13 +35,18 @@ const setCount = (state, stateKey, cnt)=>{
     return obj;
 }
 
-const toggleModal = (state )=>{
-    
-  
+const toggleModal = (state)=>{
     return {
         ...state,
         isOpen : !state.isOpen
     };
+}
+
+const clearValues = (state)=>{
+    return {
+        ...numberCountState,
+        isOpen : state.isOpen
+    };;
 }
 
 export {numberCountReducer, numberCountState};
