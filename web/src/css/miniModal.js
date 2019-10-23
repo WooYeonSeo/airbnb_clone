@@ -13,7 +13,7 @@ miniModal.ModalBox = styled.div`
     background-color: #fff;
     position: absolute;
     top:56px;
-    left :900px;
+    left : ${props => props.left+'px' || '0px'};
     box-shadow: rgba(0, 0, 0, 0.15) 0px 10px 37px !important;
 }
 `;

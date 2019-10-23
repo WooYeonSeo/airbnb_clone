@@ -14,23 +14,37 @@ const MainContainer = styled.div`
 }
 `;
 
-const useFetch = (url, options) => {
-    const [response, setResponse] = React.useState(null);
-    useEffect( async () => {
-        const res =  await fetch(url, options);
-        //console.log("res ", res);
-        const json = await res.json();
-        setResponse(json);
-    },[]);
-    return response;
-};
 
 const RoomBox = (props) => {
-    let roomsInfo  = useFetch('http://localhost:5000/api/room/search/rooms',null) ||[ ];
+    const [roomsInfo, setRoomsInfo] = React.useState([]);
 
     useEffect(()=>{
-        console.log("data fetched");
-    }, []);
+        let filterString = setFilterString(props.filter) ||"";
+        console.log("filter String" , filterString);
+        fetchMyAPI(filterString);
+        console.log("---data fetched2",props.filter);
+    },[props.filter]); 
+
+    const fetchMyAPI = async(filterString)=>{
+        let response = await fetch('http://localhost:5000/api/room/search/rooms?'+filterString);
+        response = await response.json();
+        setRoomsInfo(response);
+    }
+
+    //{adultCnt: 0, kidCnt: 0, infantCnt: 0, isOpen: false};
+    const setFilterString = (filterObj)=>{
+        let filterString ="";
+        console.log("adsfffff",filterObj["adultCnt"]);
+        let obj = {
+            "adult_num" : filterObj["adultCnt"] || "",
+            //"adult_num" : filterObj["adultCnt"] || "",
+        }
+        for (let filter in obj) {
+            filterString += filter +"="+ obj[filter]
+        }
+        console.log("filterString a / ",filterString);
+        return filterString;
+    }
 
     const rooms = roomsInfo.map((v, i) => (
         <RoomInfo key={i} room={v} />

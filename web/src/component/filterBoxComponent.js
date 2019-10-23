@@ -47,10 +47,10 @@ const Filter = () => {
     const [position, setPosition] = useState(0);
     const numberBtn = useRef();
     const toggleModal = ()=>{
-        dispatch({"type" : 'toggleModal', payload: 'test'})
+        dispatch({"type" : 'toggleModal'})
     }
     const clearValueHandler = ()=>{
-        dispatch({"type" : 'clearValues', payload: 'test'})
+        dispatch({"type" : 'clearValues'})
     }
 
     const searchRoomsHandler = ()=>{
@@ -60,26 +60,27 @@ const Filter = () => {
     useEffect(() => {
         setPosition(numberBtn.current.offsetLeft)
     },[]);
+    
     return (
         <>
+        <context.numberContext.Provider value={{ state, dispatch }}>
             <FilterBox>
                 목적지 :  <input />
             </FilterBox>
-            <context.numberContext.Provider value={{ state, dispatch }}>
                 <FilterButton ref={numberBtn} onClick={toggleModal} >
                     인원  {state.adultCnt? "어른 "+state.adultCnt:""} {state.kidCnt? "아이 "+state.kidCnt:""}  {state.infantCnt? "유아 "+state.infantCnt:""} 
                 </FilterButton>
                 <NumberModal state={state} pos={position} toggleHandler={toggleModal} clearValueHandler={clearValueHandler} />
-            </context.numberContext.Provider>
             <DatePicker/>
             <FilterBox>
                 가격
             </FilterBox>
-            <Button onClick={searchRoomsHandler}>
+            <Button>
                 검색
             </Button>
 
-            <RoomBox />
+            <RoomBox filter={state}/>
+        </context.numberContext.Provider>
         </>
     );
 };
