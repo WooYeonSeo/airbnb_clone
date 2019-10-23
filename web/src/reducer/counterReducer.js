@@ -2,7 +2,8 @@
 const numberCountState = {
     adultCnt: 0,
     kidCnt: 0,
-    infantCnt : 0
+    infantCnt : 0,
+    isOpen : true,
 
 };
 
@@ -11,9 +12,11 @@ const numberCountReducer = (state, action)=>{
         case 'setKidCount':
             return setCount(state, "kidCnt", state.kidCnt +action.payload);
         case 'setAdultCount':
-            return setCount (state, "adultCnt" , state.adultCnt + action.payload );
+            return setCount (state, "adultCnt" , state.adultCnt + action.payload);
         case 'setInfantCount':
             return setCount(state,"infantCnt", state.infantCnt + action.payload);
+        case 'toggleModal':
+            return toggleModal(state ,action.payload);
         default:
             throw new Error();
     }
@@ -30,5 +33,13 @@ const setCount = (state, stateKey, cnt)=>{
     return obj;
 }
 
+const toggleModal = (state )=>{
+    
+  
+    return {
+        ...state,
+        isOpen : !state.isOpen
+    };
+}
 
 export {numberCountReducer, numberCountState};

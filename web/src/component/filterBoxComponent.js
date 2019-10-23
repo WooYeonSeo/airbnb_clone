@@ -1,6 +1,7 @@
 import React, { useState, useEffect , useReducer} from "react";
 import styled from 'styled-components';
 import Modal from './numberModalComponent';
+import NumberModal from './numModalComponent';
 import DatePicker from './datePickerComponent';
 
 import context from '../context/context'
@@ -43,31 +44,31 @@ const FilterButton = styled.div`
 const Filter = () => {
 
   const [state, dispatch] = useReducer(numberCountReducer, numberCountState);
+
+  const toggleModal = ()=>{
+      console.log("toggle in filter")
+      dispatch({"type" : 'toggleModal', payload: 'test'})
+  }
   return (
     <>
         <FilterBox>
             목적지 :  <input />
         </FilterBox>
         <context.numberContext.Provider value={{ state, dispatch }}>
-            <FilterButton >
-                인원  게스트 : {state.adultCnt} 
-                <Modal />
+            <FilterButton onClick={toggleModal} >
+                인원  {state.adultCnt? "어른 "+state.adultCnt:""} {state.kidCnt? "아이 "+state.kidCnt:""}  {state.infantCnt? "유아 "+state.infantCnt:""} 
             </FilterButton>
+            <NumberModal state={state} toggleHandler={toggleModal} />
         </context.numberContext.Provider>
-        
         <DatePicker/>
-
         <FilterBox>
-           가격
+            가격
         </FilterBox>
         <Button>
             검색
         </Button>
 
-
         <RoomBox />
-
-       
     </>
   );
 };
