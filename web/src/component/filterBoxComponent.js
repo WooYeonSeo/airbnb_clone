@@ -1,4 +1,4 @@
-import React, { useState, useEffect , useReducer} from "react";
+import React, { useState, useEffect , useReducer, useRef} from "react";
 import styled from 'styled-components';
 import Modal from './numberModalComponent';
 import NumberModal from './numModalComponent';
@@ -42,33 +42,40 @@ const FilterButton = styled.div`
 `;
 
 const Filter = () => {
-
     const [state, dispatch] = useReducer(numberCountReducer, numberCountState);
 
+    const [position, setPosition] = useState(0);
+    const numberBtn = useRef();
     const toggleModal = ()=>{
-        console.log("toggle in filter")
         dispatch({"type" : 'toggleModal', payload: 'test'})
     }
     const clearValueHandler = ()=>{
-        console.log("toggle in filter")
         dispatch({"type" : 'clearValues', payload: 'test'})
     }
+
+    const searchRoomsHandler = ()=>{
+
+    }
+
+    useEffect(() => {
+        setPosition(numberBtn.current.offsetLeft)
+    },[]);
     return (
         <>
             <FilterBox>
                 목적지 :  <input />
             </FilterBox>
             <context.numberContext.Provider value={{ state, dispatch }}>
-                <FilterButton onClick={toggleModal} >
+                <FilterButton ref={numberBtn} onClick={toggleModal} >
                     인원  {state.adultCnt? "어른 "+state.adultCnt:""} {state.kidCnt? "아이 "+state.kidCnt:""}  {state.infantCnt? "유아 "+state.infantCnt:""} 
                 </FilterButton>
-                <NumberModal state={state} toggleHandler={toggleModal} clearValueHandler={clearValueHandler} />
+                <NumberModal state={state} pos={position} toggleHandler={toggleModal} clearValueHandler={clearValueHandler} />
             </context.numberContext.Provider>
             <DatePicker/>
             <FilterBox>
                 가격
             </FilterBox>
-            <Button>
+            <Button onClick={searchRoomsHandler}>
                 검색
             </Button>
 
