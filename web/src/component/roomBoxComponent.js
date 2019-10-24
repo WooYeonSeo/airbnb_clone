@@ -21,7 +21,6 @@ const RoomBox = (props) => {
     //usememory
     useEffect(()=>{
         let filterString = setFilterString(props.filter) ||"";
-        //console.log("filter String" , filterString);
         fetchMyAPI(filterString);
         console.log("---data fetched2 ",props.filter);
     },[props.filter]); 

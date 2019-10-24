@@ -3,9 +3,10 @@ const numberCountState = {
     adultCnt: 0,
     kidCnt: 0,
     infantCnt : 0,
-    isOpen : false, 
     priceModalIsOpen : false,
     numberModalIsOpen : false,
+    minPrice : 12000,
+    maxPrice : 1000000,
 };
 
 const numberCountReducer = (state, action)=>{
@@ -20,6 +21,10 @@ const numberCountReducer = (state, action)=>{
             return toggleModal(state ,action.payload);
         case 'clearValues':
             return clearValues(state);
+        case 'setMinPrice':
+            return setMinPrice(state ,action.payload);
+        case 'setMaxPrice':
+            return setMaxPrice(state ,action.payload);
         default:
             throw new Error();
     }
@@ -47,7 +52,20 @@ const clearValues = (state)=>{
     return {
         ...numberCountState,
         isOpen : state.isOpen
-    };;
+    };
 }
 
+const setMinPrice = (state,minPrice) =>{
+    return  {
+        ...state,
+        minPrice :  Number(minPrice)
+    };
+}
+
+const setMaxPrice = (state,maxPrice) =>{
+    return {
+        ...state,
+        maxPrice :  Number(maxPrice)
+    };
+}
 export {numberCountReducer, numberCountState};

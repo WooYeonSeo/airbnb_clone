@@ -15,9 +15,9 @@ const FilterBox = styled.div`
     font-weight: 600;
     border-radius: 2px;
     background-color: beige;
-    padding: 0.75rem;
-    background: white;
-    margin: 0.25rem;
+    padding: 0.9rem;
+    background: ${props=>props.color?'#00a699':'white'};
+    margin: 0 0.25rem 0.25rem 0;
 `;
 
 const Button = styled.div`
@@ -75,15 +75,12 @@ const Filter = () => {
     return (
         <>
         <context.numberContext.Provider value={{ state, dispatch }}>
-            <FilterBox>
-                목적지 :  <input />
-            </FilterBox>
 
-            <FilterButton color={state.numberModalIsOpen} ref={numberBtn} onClick={toggleModal} >
+            <FilterBox color={state.numberModalIsOpen} ref={numberBtn} onClick={toggleModal} >
                 인원  {state.adultCnt? "어른 "+state.adultCnt:""} {state.kidCnt? "아이 "+state.kidCnt:""}  {state.infantCnt? "유아 "+state.infantCnt:""} 
-            </FilterButton>
+            </FilterBox>
             <NumberModal 
-                state={state.numberModalIsOpen} 
+                isOpen={state.numberModalIsOpen} 
                 pos={position} 
                 toggleHandler={toggleModal} 
                 clearValueHandler={()=>{clearValueHandler('numberModal')}} 
@@ -91,15 +88,17 @@ const Filter = () => {
 
             <DatePicker/>
 
-            <FilterButton color={state.priceModalIsOpen} onClick={togglePriceModal}  ref={priceBtn} >
+            <FilterBox color={state.priceModalIsOpen} onClick={togglePriceModal}  ref={priceBtn} >
                 가격
-            </FilterButton>
+            </FilterBox>
 
             <PriceModal 
-                state={state.priceModalIsOpen} 
+                isOpen={state.priceModalIsOpen} 
                 pos={position} 
                 toggleHandler={togglePriceModal} 
-                clearValueHandler={()=>{clearValueHandler('priceModal')}}>
+                clearValueHandler={()=>{clearValueHandler('priceModal')}}
+                dispatch={dispatch}
+                state={state}>
             </PriceModal>
 
             <Button>

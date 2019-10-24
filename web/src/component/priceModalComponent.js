@@ -1,37 +1,33 @@
 import React, { useState, useEffect , useReducer} from "react";
 import Modal from "./withModalComponent";
-import rangeSlider from '../css/rangeSlider';
+import RangeSlider from './rangeSliderComponent';
 
-const Price = () => {
-   const [minPrice, setMinPrice] = useState(12000);
-   const [maxPrice, setMaxPrice] = useState(1000000);
+const Price = (props) => {
 
     const minPriceHandle = (e) =>{
         let newMin = e.target.value
-        if( newMin > maxPrice-1 ){
-            newMin = maxPrice;
+        if( newMin > props.state.maxPrice-1 ){
+            newMin = props.state.maxPrice;
         }
-        setMinPrice(newMin);
+        props.dispatch({type:'setMinPrice', payload : newMin});
+       
     }
 
     const maxPriceHandle = (e) =>{
         let newMax = e.target.value
-        if( newMax < minPrice+1 ){
-            newMax = minPrice;
+        if( newMax < props.state.minPrice+1 ){
+            newMax = props.state.minPrice;
         }
-        setMaxPrice(newMax);
+        props.dispatch({type:'setMaxPrice', payload : newMax});
     }
     return ( 
          <> 
-           <rangeSlider.RangesliderBox >
-                <rangeSlider.RangesliderInput type="range" min="12000" max="1000000" value={minPrice} onChange={minPriceHandle} className="slider" id="myRange" />
-                <rangeSlider.RangesliderInput type="range" min="12000" max="1000000" value={maxPrice} onChange={maxPriceHandle} className="slider" id="myRange" />
-           </rangeSlider.RangesliderBox>
-           <div>
-                <span> 최저 :<input value={minPrice} type="number" onChange={minPriceHandle}></input></span>
-                <span> 최대 : <input value={maxPrice} type="number" onChange={maxPriceHandle}></input></span>
-           </div>
-          
+           <RangeSlider
+              minPrice={props.state.minPrice}
+              minPriceHandle={minPriceHandle}
+              maxPrice={props.state.maxPrice}
+              maxPriceHandle={maxPriceHandle}
+           ></RangeSlider>
          </>
     );
 }
