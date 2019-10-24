@@ -18,11 +18,12 @@ const MainContainer = styled.div`
 const RoomBox = (props) => {
     const [roomsInfo, setRoomsInfo] = React.useState([]);
 
+    //usememory
     useEffect(()=>{
         let filterString = setFilterString(props.filter) ||"";
-        console.log("filter String" , filterString);
+        //console.log("filter String" , filterString);
         fetchMyAPI(filterString);
-        console.log("---data fetched2",props.filter);
+        console.log("---data fetched2 ",props.filter);
     },[props.filter]); 
 
     const fetchMyAPI = async(filterString)=>{
@@ -31,18 +32,14 @@ const RoomBox = (props) => {
         setRoomsInfo(response);
     }
 
-    //{adultCnt: 0, kidCnt: 0, infantCnt: 0, isOpen: false};
     const setFilterString = (filterObj)=>{
         let filterString ="";
-        console.log("adsfffff",filterObj["adultCnt"]);
         let obj = {
             "adult_num" : filterObj["adultCnt"] || "",
-            //"adult_num" : filterObj["adultCnt"] || "",
         }
         for (let filter in obj) {
             filterString += filter +"="+ obj[filter]
         }
-        console.log("filterString a / ",filterString);
         return filterString;
     }
 
@@ -53,7 +50,7 @@ const RoomBox = (props) => {
     return (
         <>
             <MainContainer>
-                <span>ROOMS : N개</span>
+                <span>ROOMS : {roomsInfo.length}개</span>
                 <div>
                     {rooms}
                 </div>

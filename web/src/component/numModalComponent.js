@@ -20,5 +20,5 @@ const Number = () => {
     );
 }
 
-const NumberModal = Modal("data")(Number);
+const NumberModal = Modal(Number);
 export default NumberModal;

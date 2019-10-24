@@ -3,8 +3,9 @@ const numberCountState = {
     adultCnt: 0,
     kidCnt: 0,
     infantCnt : 0,
-    isOpen : false,
-
+    isOpen : false, 
+    priceModalIsOpen : false,
+    numberModalIsOpen : false,
 };
 
 const numberCountReducer = (state, action)=>{
@@ -35,11 +36,11 @@ const setCount = (state, stateKey, cnt)=>{
     return obj;
 }
 
-const toggleModal = (state)=>{
-    return {
-        ...state,
-        isOpen : !state.isOpen
-    };
+const toggleModal = (state, modalId)=>{
+    let obj ={ ...state };
+    console.log(modalId+ " modal is opend ", state[modalId+"IsOpen"]);
+    obj[modalId+"IsOpen"] = !state[modalId+"IsOpen"];
+    return obj;
 }
 
 const clearValues = (state)=>{

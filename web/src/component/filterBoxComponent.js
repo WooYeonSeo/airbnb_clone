@@ -1,8 +1,8 @@
 import React, { useState, useEffect , useReducer, useRef} from "react";
 import styled from 'styled-components';
-import Modal from './numberModalComponent';
 import NumberModal from './numModalComponent';
 import DatePicker from './datePickerComponent';
+import PriceModal from './priceModalComponent';
 
 import context from '../context/context'
 import {numberCountReducer, numberCountState} from '../reducer/counterReducer.js';
@@ -32,7 +32,7 @@ const Button = styled.div`
 
 const FilterButton = styled.div`
     display:inline-block;
-    background : white;
+    background : ${props=>props.color?'#00a699':'white'};
     color:black;
     font-weight:bold;
     margin: 0.25rem;
@@ -45,20 +45,31 @@ const Filter = () => {
     const [state, dispatch] = useReducer(numberCountReducer, numberCountState);
 
     const [position, setPosition] = useState(0);
+
     const numberBtn = useRef();
+    const priceBtn = useRef();
+
+    // 방법1
     const toggleModal = ()=>{
-        dispatch({"type" : 'toggleModal'})
-    }
-    const clearValueHandler = ()=>{
-        dispatch({"type" : 'clearValues'})
-    }
-
-    const searchRoomsHandler = ()=>{
-
+        //console.log("id ",id);
+        setPosition(numberBtn.current.offsetLeft);
+        dispatch({"type" : 'toggleModal', payload :'numberModal'})
     }
 
+    // 방법2
+    const clearValueHandler = (modalId)=>{
+        dispatch({"type" : 'clearValues', payload:modalId})
+    }
+
+    // 클린코드 읽자.. ㅎ..
+
+    const togglePriceModal = ()=>{
+        setPosition(priceBtn.current.offsetLeft);
+        dispatch({"type" : 'toggleModal', payload :'priceModal'})
+    }
+    
     useEffect(() => {
-        setPosition(numberBtn.current.offsetLeft)
+        //setPosition(numberBtn.current.offsetLeft)
     },[]);
     
     return (
@@ -67,14 +78,30 @@ const Filter = () => {
             <FilterBox>
                 목적지 :  <input />
             </FilterBox>
-                <FilterButton ref={numberBtn} onClick={toggleModal} >
-                    인원  {state.adultCnt? "어른 "+state.adultCnt:""} {state.kidCnt? "아이 "+state.kidCnt:""}  {state.infantCnt? "유아 "+state.infantCnt:""} 
-                </FilterButton>
-                <NumberModal state={state} pos={position} toggleHandler={toggleModal} clearValueHandler={clearValueHandler} />
+
+            <FilterButton color={state.numberModalIsOpen} ref={numberBtn} onClick={toggleModal} >
+                인원  {state.adultCnt? "어른 "+state.adultCnt:""} {state.kidCnt? "아이 "+state.kidCnt:""}  {state.infantCnt? "유아 "+state.infantCnt:""} 
+            </FilterButton>
+            <NumberModal 
+                state={state.numberModalIsOpen} 
+                pos={position} 
+                toggleHandler={toggleModal} 
+                clearValueHandler={()=>{clearValueHandler('numberModal')}} 
+            />
+
             <DatePicker/>
-            <FilterBox>
+
+            <FilterButton color={state.priceModalIsOpen} onClick={togglePriceModal}  ref={priceBtn} >
                 가격
-            </FilterBox>
+            </FilterButton>
+
+            <PriceModal 
+                state={state.priceModalIsOpen} 
+                pos={position} 
+                toggleHandler={togglePriceModal} 
+                clearValueHandler={()=>{clearValueHandler('priceModal')}}>
+            </PriceModal>
+
             <Button>
                 검색
             </Button>
